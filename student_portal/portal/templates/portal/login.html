@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        .welcome-text {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .welcome-text span.student {
+            color: #083666;
+        }
+
+        .welcome-text span.portal {
+            color: #ffc107;
+        }
+
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1000px;
+            background-color: white;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+
+        .login-image {
+            width: 50%;
+            background-color: #f8f9fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .login-image img {
+            width: 100%;
+            max-width: 300px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .login-form {
+            width: 50%;
+            padding: 60px;
+            box-sizing: border-box;
+        }
+
+        .login-form h3 {
+            color: #663399;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        .login-form .form-control {
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 50px;
+        }
+
+        .login-form .btn-primary {
+            background-color: #ffcc00;
+            border: none;
+            color: #ffffff;
+            border-radius: 30px;
+            padding: 10px 0;
+            font-size: 18px;
+            font-weight: 1000;
+            transition: background-color 0.3s ease;
+            height: 50px;
+        }
+
+        .login-form .btn-primary:hover {
+            background-color: #e6b800;
+        }
+
+        .captcha-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .captcha-container img {
+            max-width: 100%;
+            margin-bottom: 10px;
+            border-radius: 30px;
+        }
+
+        .captcha-container input {
+            width: 100%;
+            height: 50px;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Spinning animation for emblem.png */
+        .spin-container {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 9999;
+        }
+
+        .spin-container img {
+            width: 150px;
+            animation: spin 2.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .welcome-text {
+                font-size: 36px;
+            }
+
+            .login-container {
+                flex-direction: column;
+                max-width: 90%;
+            }
+
+            .login-image {
+                display: none;
+            }
+
+            .login-form {
+                width: 100%;
+                padding: 30px;
+            }
+
+            .captcha-container {
+                flex-direction: column;
+            }
+
+            .captcha-container input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-text {
+                font-size: 28px;
+            }
+
+            .login-form {
+                padding: 20px;
+            }
+
+            .login-image img {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="welcome-text">
+        <span class="student">Student</span><span class="portal"> Portal</span>
+    </div>
+    <div class="login-container">
+        <div class="login-image">
+            <img src="{% static 'portal/TRY.png' %}" alt="Login Image">
+        </div>
+        <div class="login-form">
+            <div class="text-center mb-4">
+                <img src="{% static 'portal/logob.png' %}" alt="Logo" style="max-width: 150px;">
+            </div>
+            <form id="login-form" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="roll_number"></label>
+                    <input type="text" name="roll_number" class="form-control" placeholder="Enter Your Roll Number" required>
+                </div>
+                <div class="form-group captcha-container">
+                    {{ form.captcha }}
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+            {% if error %}
+            <div class="alert alert-danger mt-3">
+                {{ error }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Spinning emblem container -->
+    <div class="spin-container" id="spin-container">
+        <img src="{% static 'portal/emblem.png' %}" alt="Spinning Emblem">
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the form from submitting immediately
+            document.querySelector('.login-container').style.display = 'none'; // Hide the login form
+            document.getElementById('spin-container').style.display = 'flex'; // Show the spinning emblem
+
+            setTimeout(function () {
+                e.target.submit(); // Submit the form after the animation
+            }, 2500); // 2.5 seconds delay
+        });
+    </script>
+</body>
+
+</html>

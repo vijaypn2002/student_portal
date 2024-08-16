@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #800080;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header img {
+            width: 60px;
+            margin-bottom: 10px;
+        }
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .result-table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .result-table th, .result-table td {
+            border: 1px solid #800080;
+            padding: 10px;
+            text-align: center;
+        }
+        .result-table th {
+            background-color: #800080;
+            color: white;
+        }
+        .total-row {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .footer {
+            background-color: #800080;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 40px;
+            position: relative;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+        .footer a {
+            color: white;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            margin-top: 10px;
+            padding: 15px;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://your-logo-url.png" alt="Institute Logo"> <!-- Replace with your logo URL -->
+        <h1>The Institute of Chartered Accountants of India</h1>
+        <p class="result-title">Examination Results, June 2024</p>
+    </div>
+
+    <div class="container">
+        <table class="table table-bordered result-table">
+            <tr>
+                <th>ROLL Number</th>
+                <td>{{ student.roll_number }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ student.student_name }}</td>
+            </tr>
+            <tr class="table-info">
+                <th>PAPER</th>
+                <th>SUBJECT</th>
+                <th>MARKS OBTAINED</th>
+            </tr>
+            <tr>
+                <td>Paper 1</td>
+                <td>Accounting</td>
+                <td>{{ student.sub1 }}</td>
+            </tr>
+            <tr>
+                <td>Paper 2</td>
+                <td>Business Laws</td>
+                <td>{{ student.sub2 }}</td>
+            </tr>
+            <tr>
+                <td>Paper 3</td>
+                <td>Quantitative Aptitude - Business Mathematics - Logical Reasoning - Statistics</td>
+                <td>{{ student.sub3 }}</td>
+            </tr>
+            <tr>
+                <td>Paper 4</td>
+                <td>Business Economics</td>
+                <td>{{ student.sub4 }}</td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="2">Total</td>
+                <td>{{ student.total }}</td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="2">Result</td>
+                <td class="success">{{ student.result }}</td> <!-- Modify this text as needed -->
+            </tr>
+        </table>
+        <div class="text-center">
+            <a href="{% url 'student_dashboard' %}" class="btn btn-primary mt-4">Home</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        Hosted by National Informatics Centre
+    </div>
+    <div class="disclaimer text-center">
+        <p>The result given is correct at the time of release of the result by the Institute which accepts no responsibility thereafter for errors or omissions caused as a result of their transmission via the Internet or their downloading by the user. No material from this web site can be copied, reproduced, published, uploaded, posted, transmitted or distributed or dealt with in any manner, unless expressly authorized. Users are not permitted to change, modify or prepare derivative works from the content of this site. For any clarifications / confirmation please address your enquiries to Director (Examinations),The Institute of Chartered Accountants of India, 'ICAI BHAWAN', Post Box No. 7112, Indraprastha Marg, New Delhi - 110 002.</p>
+    </div>
+
+</body>
+</html>

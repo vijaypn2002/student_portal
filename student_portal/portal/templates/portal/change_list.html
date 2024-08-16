@@ -1,0 +1,9 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+    <div class="custom-admin-buttons">
+        <a class="button" href="{{ custom_buttons.upload_results }}">Bulk Upload Results</a>
+        <a class="button" href="{{ custom_buttons.upload_halltickets }}">Bulk Upload Hall Tickets</a>
+    </div>
+    {{ block.super }}
+{% endblock %}

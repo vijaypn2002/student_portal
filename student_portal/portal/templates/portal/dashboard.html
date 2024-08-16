@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styling */
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #01508C; /* Header background color */
+            color: white;
+            padding: 30px; /* Increased padding for larger header */
+            text-align: center;
+            font-size: 2rem; /* Increased font size */
+            font-weight: bold;
+            position: relative;
+        }
+
+        .header img {
+            position: absolute;
+            left: 30px; /* Adjusted position */
+            top: 50%;
+            transform: translateY(-50%); /* Center vertically */
+            width: 350px; /* Adjust logo size */
+        }
+
+        .sub-header {
+            font-size: 1.8rem; /* Adjusted sub-header font size */
+            color: rgb(230, 187, 17);
+        }
+
+        .content {
+            padding: 30px; /* Increased padding */
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            font-size: 1.8rem; /* Increased font size */
+            font-weight: bold;
+            color: #01508C;
+            border-bottom: 3px solid #01508C;
+            margin-bottom: 30px; /* Increased margin */
+            padding-bottom: 15px; /* Increased padding */
+        }
+
+        .result-item {
+            padding: 20px 0; /* Increased padding */
+            border-bottom: 1px solid #ddd;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .exam-title {
+            font-size: 1.5rem; /* Increased font size */
+            font-weight: bold;
+            color: #000;
+        }
+
+        .exam-date {
+            font-size: 1.2rem; /* Increased font size */
+            color: green;
+            font-weight: bold;
+        }
+
+        .availability-note {
+            font-size: 1.2rem; /* Increased font size */
+            color: red;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .btn-link {
+            font-size: 1.2rem; /* Increased font size */
+            color: #01508C;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 15px; /* Increased padding */
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            background-color: transparent; /* No background */
+            border: 1px solid transparent; /* No border */
+            text-align: center;
+        }
+
+        .btn-link:hover {
+            background-color: #ececec;
+            text-decoration: none;
+        }
+
+        .footer {
+            background-color: #01508C;
+            color: white;
+            text-align: center;
+            padding: 20px; /* Increased padding */
+            font-size: 1.2rem; /* Increased font size */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Full-width adjustment */
+        @media (min-width: 768px) {
+            .content {
+                max-width: none;
+                width: 80%; /* Reduced width to fit larger content better */
+                margin: 30px auto;
+                border-radius: 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header {
+                font-size: 1.5rem;
+                padding: 20px;
+            }
+
+            .sub-header {
+                font-size: 0.9rem; /* Reduced font size for mobile view */
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section-header {
+                font-size: 1.3rem;
+                padding-bottom: 10px;
+            }
+
+            .availability-note {
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .header img {
+                position: static;
+                display: block;
+                margin: 0 auto 10px auto; /* Center logo on mobile */
+                width: 150px; /* Increased logo size for mobile */
+            }
+
+            .footer {
+                font-size: 0.8rem; /* Reduced font size for mobile */
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="header">
+        <img src="{% static 'portal/logo.png' %}" alt="Institute Logo">
+        Student Portal
+        <div class="sub-header">Indian Institute of Commerce Lakshya</div>
+    </div>
+
+    <div class="content">
+        <div class="section-header">CHECK RESULTS</div>
+        <div class="result-item">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="exam-title">CA Foundation Mega Exam Aug 2024</div>
+                    <p class="exam-date">Results Yet to Announce</p>
+                </div>
+                <a href="#" class="btn-link">View Result</a>
+            </div>
+            <div class="availability-note">Feature will only be available after the result is published</div>
+        </div>
+
+        <div class="result-item">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="exam-title">Final : May 2024</div>
+                    <p class="exam-date">Announced on 11th July 2024</p>
+                </div>
+                <a href="#" class="btn-link">View Result</a>
+            </div>
+        </div>
+
+        <div class="section-header">DOWNLOAD HALLTICKET</div>
+        <div class="result-item">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="exam-title">CA Foundation Mega Exam Aug 2024</div>
+                    <p class="exam-date">Available</p>
+                </div>
+                <a href="{% url 'download_hallticket' %}" class="btn-link">Download Hallticket</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Copyright © 2024 All rights reserved with Learnfluence Education Private Limited
+    </div>
+</body>
+
+</html>

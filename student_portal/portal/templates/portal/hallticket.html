@@ -1,0 +1,333 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=0.5, maximum-scale=0.5">
+    <title>Hall Ticket PDF</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styling */
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #01508C; /* Navbar background color */
+            color: white;
+            padding: 20px; /* Reduced padding for smaller navbar */
+            text-align: center;
+            font-size: 1.8rem; /* Slightly smaller font size */
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar a {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%); /* Center the logo vertically */
+        }
+
+        .navbar img {
+            width: 300px; /* Adjusted logo size */
+            cursor: pointer;
+        }
+
+        .navbar-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: 1.8rem; /* Slightly smaller main title font size */
+            margin: 0;
+        }
+
+        .sub-header {
+            font-size: 2rem; /* Slightly smaller sub-header font size */
+            color: rgb(226, 183, 9);
+            margin-top: 5px;
+        }
+
+        .content {
+            padding: 30px; /* Same content padding */
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            background-color: #01508C;
+            color: white;
+            text-align: center;
+            padding: 20px; /* Same padding as original footer */
+            font-size: 1.2rem; /* Same font size as original footer */
+            margin-top: auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                font-size: 1.5rem;
+                padding: 15px;
+                flex-direction: column;
+            }
+
+            .navbar img {
+                position: static;
+                display: block;
+                margin: 0 auto 10px auto;
+                width: 150px;
+            }
+
+            .main-title {
+                font-size: 1.5rem; /* Adjusted font size for mobile */
+            }
+
+            .sub-header {
+                font-size: 1.2rem; /* Adjusted sub-header font size for mobile */
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .footer {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Hall Ticket Specific Styling */
+        .hallticket-container {
+            max-width: 850px;
+            margin: 2cm auto; /* 2cm margin on all sides */
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header-content img {
+            max-width: 120px;
+            margin-bottom: 10px;
+        }
+
+        .header-content h2 {
+            color: #002855;
+            font-weight: 600;
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header-content p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .header-content h3 {
+            margin-top: 20px;
+            color: #000000;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            border-radius: 10px;
+        }
+
+        .table th, .table td {
+            padding: 12px 18px;
+            text-align: left;
+            border: 1px solid #002855;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        /* Custom layout for photo and signature */
+        .photo-signature-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .passport-photo {
+            width: 220px;
+            height: 230px;
+            border: 2px dashed #002855;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .signature-boxes {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-left: 20px;
+        }
+
+        .signature-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .signature {
+            width: 250px;
+            height: 100px;
+            border: 2px solid #002855;
+            background: #fafafa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .signature-label {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .download-button {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto 40px auto;
+            padding: 10px 20px;
+            background-color: #e0aa16;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'student_dashboard' %}">
+            <img src="{% static 'portal/logo.png' %}" alt="Institute Logo">
+        </a>
+        <div class="navbar-title">
+            <div class="main-title">Student Portal</div>
+            <div class="sub-header">Indian Institute of Commerce Lakshya</div>
+        </div>
+    </div>
+
+    <div class="hallticket-container" id="hallticket">
+        <div class="header-content">
+            <img src="{% static 'portal/logob.png' %}" alt="Institute Logo">
+            <h2>Indian Institute of Commerce Lakshya</h2>
+            
+            <h3>ADMIT CARD</h3>
+            <p><strong>CA Foundation Mega Exam Aug 2024</strong></p>
+        </div>
+
+        <div class="photo-signature-container">
+            <div class="passport-photo">
+                Passport Photo
+            </div>
+            <div class="signature-boxes">
+                <div class="signature-box">
+                    <div class="signature"></div>
+                    <div class="signature-label">Candidate Signature</div>
+                </div>
+                <div class="signature-box">
+                    <div class="signature"></div>
+                    <div class="signature-label">Authorized Signature</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box1">
+            <table class="table">
+                <tr>
+                    <th>Candidate's Name:</th>
+                    <td>{{ student.student_name }}</td>
+                </tr>
+                <tr>
+                    <th>Roll No.:</th>
+                    <td>{{ student.roll_number }}</td>
+                </tr>
+                <tr>
+                    <th>Batch.:</th>
+                    <td>{{ student.exam_name }}</td>
+                </tr>
+                <tr>
+                    <th>Medium:</th>
+                    <td>{{ student.mediam }}</td>
+                </tr>
+                <tr>
+                    <th>Exam Centre:</th>
+                    <td>{{ student.exam_address }}</td>
+                </tr>
+                <tr>
+                    <th>Mobile Number:</th>
+                    <td>{{ student.mobile_number }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <button class="download-button" onclick="downloadPDF()">Download</button>
+
+    <div class="footer">
+        Copyright © 2024 All rights reserved with Learnfluence Education Private Limited
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('hallticket');
+            html2pdf(element, {
+                margin: 0,
+                filename: 'hallticket.pdf',
+                image: { type: 'jpeg', quality: 1.0 },
+                html2canvas: { scale: 3, logging: true, dpi: 300, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            });
+        }
+    </script>
+</body>
+</html>
